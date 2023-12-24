@@ -1,0 +1,199 @@
+<!DOCTYPE html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+    <title>Quizzzzz App</title>
+    <meta name="description" content="The Quizzzzz app " />
+  </head>
+  <style>
+    * {
+      box-sizing: border-box;
+      margin: 0px;
+      padding: 0px;
+    }
+
+    body {
+      padding: 40px;
+    }
+
+    section {
+      margin-top: 20px;
+      padding: 20px;
+    }
+
+    section > div > div {
+      padding: 20px;
+      border: 2px solid rgb(223, 183, 183);
+      margin: 20px;
+    }
+    #next {
+      display: flex;
+      justify-content: center;
+      align-items: center;
+    }
+    .next {
+      padding: 7px 12px;
+      background: #000000cd;
+      font-size: 17px;
+      border: 1px solid wheat;
+      border-radius: 4px;
+    }
+  </style>
+  <body>
+    <header
+      style="
+        color: white;
+        background-color: darkslategrey;
+        text-align: center;
+        padding: 10px 0px;
+      "
+    >
+      <h1>Quiz App</h1>
+      <h3 style="display: flex; justify-content: space-around">
+        <span
+          ><span>Question <span id="questionNumber">1</span>/10</span></span
+        >
+        <span id="score"
+          ><span>Score:</span> <span id="scoreSapn">0</span><span>/10</span>
+        </span>
+      </h3>
+    </header>
+    <main>
+      <section>
+        <div class="question_1 question">
+          <h3>What is 2 + 2?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong correct">4</div>
+          <div class="wrong">5</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_2 question">
+          <h3>What is 2 + 3?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong correct">5</div>
+          <div class="wrong">7</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_3 question">
+          <h3>What is 2 + 5?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong">5</div>
+          <div class="wrong correct">7</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_4 question">
+          <h3>What is 2 + 6?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong">5</div>
+          <div class="wrong">7</div>
+          <div class="wrong correct">8</div>
+        </div>
+        <div class="question_5 question">
+          <h3>What is 2 + 7?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong correct">5</div>
+          <div class="wrong correct">9</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_6 question">
+          <h3>What is 2 + 8?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong correct">5</div>
+          <div class="wrong">7</div>
+          <div class="wrong correct">10</div>
+        </div>
+        <div class="question_7 question">
+          <h3>What is 2 + 11?</h3>
+          <div class="wrong correct">13</div>
+          <div class="wrong">5</div>
+          <div class="wrong">7</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_8 question">
+          <h3>What is 2 + 15?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong">5</div>
+          <div class="wrong correct">17</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_9 question">
+          <h3>What is 2 + 100?</h3>
+          <div class="wrong">3</div>
+          <div class="wrong">5</div>
+          <div class="wrong correct">102</div>
+          <div class="wrong">6</div>
+        </div>
+        <div class="question_10 question">
+          <h3>What is 2 + 201?</h3>
+          <div class="wrong correct">203</div>
+          <div class="wrong">5</div>
+          <div class="wrong">7</div>
+          <div class="wrong">6</div>
+        </div>
+
+        <div class="question_11 question" style="text-align: center">
+          <h1>Quiz Completed!</h1>
+          <h2>Your Score is <span class="scoreSapn"></span>/10</h2>
+        </div>
+        <div id="next"><button class="next">Next</button></div>
+      </section>
+    </main>
+  </body>
+</html>
+<script>
+  function hideOtherQuestions() {
+    const allQuestions = document.querySelectorAll(".question");
+    for (const el of allQuestions) {
+      el.style.display = "none";
+    }
+  }
+  hideOtherQuestions();
+
+  let active = 1;
+  let completed = false;
+  let score = 0;
+  let currectCorrect = true;
+  let resList = [];
+  let activeList = [];
+
+  const setActiveQuestion = (active) => {
+    document.querySelector(`.question_${active}`).style.display = "block";
+  };
+  setActiveQuestion(1);
+
+  const next = document.querySelector(".next");
+  next.addEventListener("click", () => {
+    hideOtherQuestions();
+    active = active + 1;
+
+    currectCorrect = true;
+
+    if (active === 11) {
+      document.querySelector(".scoreSapn").innerText = score;
+      next.disabled = true;
+      setTimeout(() => {
+        alert("You have completed the Quizzz.");
+      }, 500);
+    }
+    document.querySelector("#questionNumber").innerHTML = active;
+    setActiveQuestion(active);
+  });
+
+  const wrong = document.querySelectorAll(".wrong");
+  for (const el of wrong) {
+    el.addEventListener("click", () => {
+      el.style.backgroundColor = "red";
+      if (el.classList[1] === "correct") {
+        if (currectCorrect) {
+          score = score + 1;
+          document.querySelector("#scoreSapn").innerText = score;
+          currectCorrect = false;
+        }
+        el.style.backgroundColor = "green";
+      } else {
+        el.style.backgroundColor = "red";
+      }
+    });
+  }
+</script>
