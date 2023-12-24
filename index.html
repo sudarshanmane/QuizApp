@@ -32,12 +32,14 @@
       justify-content: center;
       align-items: center;
     }
-    .next {
+    .next,
+    .reset {
       padding: 7px 12px;
       background: #000000cd;
       font-size: 17px;
       border: 1px solid wheat;
       border-radius: 4px;
+      color: white;
     }
   </style>
   <body>
@@ -136,7 +138,10 @@
           <h1>Quiz Completed!</h1>
           <h2>Your Score is <span class="scoreSapn"></span>/10</h2>
         </div>
-        <div id="next"><button class="next">Next</button></div>
+        <div id="next">
+          <button class="next">Next</button>
+          <button class="reset">Restart Quiz</button>
+        </div>
       </section>
     </main>
   </body>
@@ -171,14 +176,21 @@
 
     if (active === 11) {
       document.querySelector(".scoreSapn").innerText = score;
-      next.disabled = true;
+      document.querySelector(".next").style.display = "none";
+
       setTimeout(() => {
         alert("You have completed the Quizzz.");
       }, 500);
+
+      document.querySelector(".reset").style.display = "block";
     }
-    document.querySelector("#questionNumber").innerHTML = active;
+    if (active <= 10) {
+      document.querySelector("#questionNumber").innerHTML = active;
+    }
     setActiveQuestion(active);
   });
+
+  document.querySelector(".reset").style.display = "none";
 
   const wrong = document.querySelectorAll(".wrong");
   for (const el of wrong) {
@@ -196,4 +208,8 @@
       }
     });
   }
+
+  document.querySelector(".reset").addEventListener("click", function () {
+    window.location.reload();
+  });
 </script>
